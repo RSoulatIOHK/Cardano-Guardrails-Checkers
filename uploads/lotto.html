@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Alasdair Hill, Romain Soulat" />
+  <meta name="dcterms.date" content="2024-02-19" />
+  <title>Minimal Lotto Certification</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="sakura.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Minimal Lotto Certification</h1>
+<p class="author">Alasdair Hill, Romain Soulat</p>
+<p class="date">February 19, 2024</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#minimal-lotto-example"
+id="toc-minimal-lotto-example">Minimal Lotto Example</a></li>
+<li><a href="#contract-model" id="toc-contract-model">Contract
+model</a></li>
+<li><a href="#threat-models" id="toc-threat-models">Threat
+models</a></li>
+<li><a href="#on-chain-testing-of-any-language"
+id="toc-on-chain-testing-of-any-language">On-chain testing of any
+language</a></li>
+<li><a href="#property-based-testing-and-all-our-automated-checks"
+id="toc-property-based-testing-and-all-our-automated-checks">Property-Based-Testing
+and all our automated checks</a></li>
+<li><a
+href="#discussion-on-statespreconditionsfrequencies-for-deeper-pbt"
+id="toc-discussion-on-statespreconditionsfrequencies-for-deeper-pbt">Discussion
+on states/preconditions/frequencies for deeper PBT</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p><a
+href="https://github.com/input-output-hk/quickcheck-contractmodel">Contract
+models</a> are a testing library that provide a way to use QuickCheck to
+perform stateful property-based testing on plutus contracts. This
+approach tests contracts against user-defined specifications that
+describe the actions that can be taken by a contract as well as their
+expected behaviour. QuickCheck is used to test a specification by
+generating and running numerous sequences of transactions on an emulator
+and ensuring that the result matches the expected behaviour. One
+advantage of this approach is that multiple different techniques and
+properties can be used once a specification is defined. This includes
+negative testing as well as testing against specific vulnerabilities
+such as <a
+href="https://medium.com/@vacuumlabs_auditing/cardano-vulnerabilities-1-double-satisfaction-219f1bc9665e#:~:text=the%20BuyNFT%20UTxO.-,The%20Double%20Satisfaction,be%20validated%20by%20the%20blockchain.">double
+satisfaction</a>. It is possible to use the Contract Model with any
+emulator that uses Cardano API for transactions. To illustrate the
+various features of the contract model we will take a look at a <a
+href="https://github.com/tweag/cooked-smart-contracts/tree/main/lotto">lotto
+contract</a> produced by Tweag. Interestingly this contract is written
+in <a
+href="https://github.com/Plutonomicon/plutarch-plutus">plutarch</a> and
+will be testing against the <a
+href="https://github.com/tweag/cooked-validators">Cooked</a> emulator.
+Previous tutorials on the contract model that use the plutus-apps
+emulator can be found: (fix this)</p>
+<p>Quick presentation of the testing tool, link to previous posts?</p>
+<h1 id="minimal-lotto-example">Minimal Lotto Example</h1>
+<p>Presentation of the minimal lotto example, link to repo, link to
+their doc, link to what they already knew</p>
+<h1 id="contract-model">Contract model</h1>
+<p>Presentation of what is a contract model. The different elements, how
+we wrote them. Show that we don’t use any of what Tweag already knew</p>
+<h1 id="threat-models">Threat models</h1>
+<p>What it is, what we already have as threats</p>
+<h1 id="on-chain-testing-of-any-language">On-chain testing of any
+language</h1>
+<p>How we do it</p>
+<h1
+id="property-based-testing-and-all-our-automated-checks">Property-Based-Testing
+and all our automated checks</h1>
+<p>What we find using the “simple” PBT (operator doesn’t get enough)
+What we find using Negative testing with everything at false =&gt;
+Strengthening the negative testing leads to assumptions on the security?
+What we find using the threat model (Double Satisfaction) with little to
+no input from the developer</p>
+<h1
+id="discussion-on-statespreconditionsfrequencies-for-deeper-pbt">Discussion
+on states/preconditions/frequencies for deeper PBT</h1>
+<p>What is allows us to discover Future work?</p>
+<p>TBD</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">function ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>function i <span class="ot">=</span> i <span class="op">+</span> <span class="dv">1</span></span></code></pre></div>
+</body>
+</html>
