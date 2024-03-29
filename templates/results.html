@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <title>Result</title>
+  </head>
+  <style>
+    .container {
+      flex-wrap: wrap;
+    }
+    .card {
+      margin: 10px;
+      padding: 10px;
+      width: 100vw;
+    }
+    .card h1 {
+      font-size: 20px;
+    }
+    .card h2 {
+      font-size: 14px;
+      /* Not bold: */
+      font-weight: normal;
+    }
+  </style>
+  <body>
+    <div class="container">
+      {% for key, value in jsonfile.items() %}
+       <div class="card">
+        <h1>{{key}}</h1>
+        <h2>{{value}}</h2>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>

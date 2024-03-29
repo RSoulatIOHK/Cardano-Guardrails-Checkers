@@ -14,11 +14,11 @@ def main():
 def success():   
     if request.method == 'POST':   
         f = request.files['file']
-        savefile = f'./proto/uploads/{f.filename}'
+        savefile = f'./uploads/{f.filename}'
         f.save(savefile)
         outfile = param_checkers(savefile)
         data = json.load(open(outfile))
-        return render_template("Acknowledgement.html", name = f.filename, jsonfile = json.dumps(data))   
+        return render_template("results.html", name = f.filename, jsonfile = data)   
   
 if __name__ == '__main__':   
     app.run(debug=True)

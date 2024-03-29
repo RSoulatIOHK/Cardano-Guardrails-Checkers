@@ -193,10 +193,10 @@ def uncheckableCheck(proposal, all_constitutions, checks):
         # print(f'Guardrails not checked by script for key {key} (param {paramMap[key]["name"]}) is done')
     return checks
 
-def param_checkers(pathfile = './proto/data/proposal.json', outfile = './proto/data/checks.json'):
+def param_checkers(pathfile = './data/proposal.json', outfile = './data/checks.json'):
     checks = {}
     with ExitStack() as stack:
-        all_constitutions_files = [stack.enter_context(open(f'./proto/constitutions/constitution_{i}.json')) for i in range(1, 3)]
+        all_constitutions_files = [stack.enter_context(open(f'./constitutions/constitution_{i}.json')) for i in range(1, 3)]
         all_constitutions = [json.load(f) for f in all_constitutions_files]
         with open(pathfile) as f:
             proposal = json.load(f)
