@@ -40,10 +40,11 @@ def eup_01(executionUnitPrices, proposal, constitutions):
 
 def eup_02(executionUnitPrices, proposal, constitutions):
     proposalParameters = proposal["parameter_changes"]
-    return "19" in proposalParameters and ("0" in proposal or "1" in proposal)
+    return "19" in proposalParameters and ("0" in proposalParameters or "1" in proposalParameters)
 
 def mfrs_03(executionUnitPrices, proposal, constitutions):
-    return "33" in proposal
+    proposalParameters = proposal["parameter_changes"]
+    return "33" in proposalParameters
 
 
 checkable = [

@@ -4,33 +4,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
     <title>Result</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+      }
+      .card {
+        margin: 10px;
+        padding: 20px;
+        width: 300px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .card-title-pass {
+        font-size: 20px;
+        font-weight: bold;
+        color: green;
+        margin-bottom: 10px;
+      }
+      .card-title-fail {
+        font-size: 20px;
+        font-weight: bold;
+        color: red;
+        margin-bottom: 10px;
+      }
+      .card-subtitle {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .card-content {
+        margin-top: 10px;
+      }
+      .collapse-button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .collapse-button:hover {
+        background-color: #0056b3;
+      }
+      .guardrail-none {
+        background-color: rgb(128, 128, 128);
+      }
+      .guardrail-int {
+        background-color: rgba(173, 216, 230, 0.4);
+      }
+      .guardrail-pass {
+        background-color: rgba(0, 128, 0, 0.4);
+      }
+      .guardrail-fail {
+        background-color: rgba(255, 0, 0, 0.4);
+      }
+      .guardrail-float {
+        background-color: rgba(173, 216, 230, 0.4);
+      }
+      .guardrail-string,
+      .guardrail-other {
+        background-color: rgba(173, 216, 230, 0.4);
+      }
+    </style>
   </head>
-  <style>
-    .container {
-      flex-wrap: wrap;
-    }
-    .card {
-      margin: 10px;
-      padding: 10px;
-      width: 100vw;
-    }
-    .card h1 {
-      font-size: 20px;
-    }
-    .card h2 {
-      font-size: 14px;
-      /* Not bold: */
-      font-weight: normal;
-    }
-  </style>
   <body>
     <div class="container">
       {% for key, value in jsonfile.items() %}
-       <div class="card">
-        <h1>{{key}}</h1>
-        <h2>{{value}}</h2>
-      </div>
+        <div class="card">
+          {% if value.summary %}
+            <h1 class="card-title-pass">{{key}}</h1>
+          {% else %}
+            <h1 class="card-title-fail">{{key}}</h1>
+          {% endif %}
+          {% if value %}
+            <p>{{value.value}}</p>
+            <button class="collapse-button" onclick="toggleCardContent(this)">Show</button>
+            <div class="card-content" style="display: none;">
+              {% for innerKey, innerValue in value.guardrails.items() %}
+                {% if innerValue.result is boolean %}
+                  {% if innerValue.result %}
+                    <div class="guardrail-pass">
+                  {% else %}
+                    <div class="guardrail-fail">
+                  {% endif %}
+                {% elif innerValue.result == None %}
+                  <div class="guardrail-none">
+                {% elif innerValue.result is integer %}
+                  <div class="guardrail-int">
+                {% elif innerValue.result is float %}
+                  <div class="guardrail-float">
+                {% elif innerValue.result is string %}
+                  <div class="guardrail-string">
+                {% else %}
+                  <div class="guardrail-other">
+                {% endif %}
+                <h2 class="card-subtitle">{{innerKey}}</h2>
+                <p>{{innerValue.value}}</p>
+                <p>{{innerValue.description}}</p>
+              </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <h2 class="card-subtitle">No checks were available for those parameters</h2>
+          {% endif %}
+        </div>
       {% endfor %}
     </div>
+    <script>
+      function toggleCardContent(button) {
+        const card = button.parentNode;
+        const cardContent = card.querySelector(".card-content");
+        cardContent.style.display = cardContent.style.display === "none" ? "block" : "none";
+        button.textContent = cardContent.style.display === "none" ? "Show" : "Collapse";
+      }
+    </script>
   </body>
 </html>

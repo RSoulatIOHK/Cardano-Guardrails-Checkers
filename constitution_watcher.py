@@ -1,5 +1,7 @@
 import json
 from paramMap import paramMap
+from contextlib import ExitStack
+
 import guardrails.txFeeFixed as txFeeFixed
 import guardrails.txFeePerByte as txFeePerByte
 import guardrails.utxoCostPerByte as utxoCostPerByte
@@ -28,11 +30,8 @@ import guardrails.govDeposit as govDeposit
 import guardrails.dRepDeposit as dRepDeposit
 import guardrails.dRepActivity as dRepActivity
 import guardrails.minFeeRefScriptCoinsPerByte as minFeeRefScriptCoinsPerByte
-from contextlib import ExitStack
-from typing import Any
-from pprint import pprint
 
-mapKeyChecks = {
+guardrailChecks = {
     "0": {
         "checkable": txFeePerByte.checkable,
         "uncheckable": txFeePerByte.uncheckable
@@ -155,45 +154,44 @@ mapKeyChecks = {
     }
 }
 
-def checkGuardrails(value: int, guardrails, proposal = None, constitutions = None):
+def checkGuardrails(value: int, checkableGuardrails, proposal=None, constitutions=None):
     check_results = {}
-    if guardrails == None:
+    check_results["value"] = value
+    check_results["guardrails"] = {}
+    if checkableGuardrails is None:
         return None
-    for guardrail in guardrails:
-        if proposal == None and constitutions == None:
+    for guardrail in checkableGuardrails:
+        if proposal is None and constitutions is None:
             result = guardrail["function"](value)
         else:
             result = guardrail["function"](value, proposal, constitutions)
-        if guardrail["name"] not in check_results:
-            check_results[guardrail["name"]] = {}
-        check_results[guardrail["name"]]["value"] = value
-        check_results[guardrail["name"]]["result"] = result
-        check_results[guardrail["name"]]["description"] = guardrail["description"]
-        check_results[guardrail["name"]]["name"] = guardrail["name"]
+        guardrail_name = guardrail["name"]
+        check_results["guardrails"][guardrail_name] = {
+            "result": result,
+            "description": guardrail["description"],
+            "name": guardrail_name
+        }
     return check_results
 
-def staticCheck(proposal, checks):
+def addStaticCheck(proposal, checks):
     for key in proposal:
         paramProposal = proposal[key]
-        results = None
-        results = checkGuardrails(paramProposal, mapKeyChecks[key]["checkable"])
+        results = checkGuardrails(paramProposal, guardrailChecks[key]["checkable"])
         checks[paramMap[key]["name"]] = results
-        # print(f'Guardrails not checked by script for key {key} (param {paramMap[key]["name"]}) is done')
     return checks
 
-def uncheckableCheck(proposal, all_constitutions, checks):
+def addUncheckableCheck(proposal, all_constitutions, checks):
     for key in proposal["parameter_changes"]:
         paramProposal = proposal["parameter_changes"][key]
         if paramProposal == {}:
             paramProposal = all_constitutions[-1]["parameters_values"][key]
-        if mapKeyChecks[key]["uncheckable"] == None:
+        if guardrailChecks[key]["uncheckable"] is None:
             continue
-        results = checkGuardrails(paramProposal, mapKeyChecks[key]["uncheckable"], proposal, all_constitutions)
-        checks[paramMap[key]["name"]] = (checks[paramMap[key]["name"]] | results) 
-        # print(f'Guardrails not checked by script for key {key} (param {paramMap[key]["name"]}) is done')
+        results = checkGuardrails(paramProposal, guardrailChecks[key]["uncheckable"], proposal, all_constitutions)
+        checks[paramMap[key]["name"]]["guardrails"].update(results["guardrails"])
     return checks
 
-def param_checkers(pathfile = './data/proposal.json', outfile = './data/checks.json'):
+def checkProposal(pathfile='./data/proposal.json', outfile='./data/checks.json'):
     checks = {}
     with ExitStack() as stack:
         all_constitutions_files = [stack.enter_context(open(f'./constitutions/constitution_{i}.json')) for i in range(1, 3)]
@@ -203,14 +201,24 @@ def param_checkers(pathfile = './data/proposal.json', outfile = './data/checks.j
             current_parameter_proposal = proposal["parameter_changes"]
         
         # Static checks
-        checks = staticCheck(current_parameter_proposal, checks)
+        checks = addStaticCheck(current_parameter_proposal, checks)
         
         # All "uncheckable" checks
-        checks = uncheckableCheck(proposal, all_constitutions, checks)
+        checks = addUncheckableCheck(proposal, all_constitutions, checks)
 
-    # pprint(checks)
+        # For all the parameters add a "summary" field with True if all guardrails are True, False if any guardrail is False
+        for parameter in checks:
+            if checks[parameter] is not None:
+                for guardrail in checks[parameter]["guardrails"]:
+                    checks[parameter]["summary"] = True
+                    result = checks[parameter]["guardrails"][guardrail]["result"]
+                    if isinstance(result, bool) and not result:
+                        checks[parameter]["summary"] = False
+                        break
+            else:
+                pass                
     json.dump(checks, open(outfile, 'w'), indent=4)
     return outfile
 
 if __name__ == "__main__":
-    param_checkers()
+    checkProposal()

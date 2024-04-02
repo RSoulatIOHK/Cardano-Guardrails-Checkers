@@ -24,11 +24,11 @@ def mteu_m_02(maxTxExecutionUnits):
 
 def mteu_m_03(maxTxExecutionUnits, proposal, constitutions):
     latest_constitution = constitutions[-1]
-    return maxTxExecutionUnits["mem"] >= latest_constitution["parameters_values"]["21"]["mem"]
+    return maxTxExecutionUnits["mem"] >= latest_constitution["parameters_values"]["20"]["mem"]
 
 def mteu_m_04(maxTxExecutionUnits, proposal, constitutions):
     latest_constitution = constitutions[-1]
-    return maxTxExecutionUnits["mem"] - latest_constitution["parameters_values"]["21"]["mem"] <= 2500000
+    return maxTxExecutionUnits["mem"] - latest_constitution["parameters_values"]["20"]["mem"] <= 2500000
 
 def mteu_m_05(maxTxExecutionUnits, proposal, constitutions):
     if "21" in proposal:
@@ -44,11 +44,11 @@ def mteu_s_02(maxTxExecutionUnits):
 
 def mteu_s_03(maxTxExecutionUnits, proposal, constitutions):
     latest_constitution = constitutions[-1]
-    return maxTxExecutionUnits["steps"] >= latest_constitution["parameters_values"]["21"]["steps"]
+    return maxTxExecutionUnits["steps"] >= latest_constitution["parameters_values"]["20"]["steps"]
 
 def mteu_s_04(maxTxExecutionUnits, proposal, constitutions):
     latest_constitution = constitutions[-1]
-    return maxTxExecutionUnits["steps"] - latest_constitution["parameters_values"]["21"]["steps"] <= 500000000
+    return maxTxExecutionUnits["steps"] - latest_constitution["parameters_values"]["20"]["steps"] <= 500000000
 
 def mteu_s_05(maxTxExecutionUnits, proposal, constitutions):
     if "21" in proposal:
@@ -77,7 +77,7 @@ checkable = [
 
 uncheckable = [
     { "name": "MTEU-M-03"
-    , "description": "maxTxExecutionUnits[memory] should not be changed (increased or decreased) by more than the value of the latest constitution"
+    , "description": "maxTxExecutionUnits[memory] must not be decreased"
     , "function": mteu_m_03
     },
     { "name": "MTEU-M-04"

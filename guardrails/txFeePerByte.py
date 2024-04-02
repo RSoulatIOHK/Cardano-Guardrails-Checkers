@@ -9,13 +9,14 @@ def tfpb_03(txFeePerByte):
 
 def tf_01(paramProposal, proposal, constitutions):
     proposalParameters = proposal["parameter_changes"]
-    return "19" in proposalParameters and ("0" in proposal or "1" in proposal)
+    return "19" in proposalParameters and ("0" in proposalParameters or "1" in proposalParameters)
 
 def tf_02(paramProposal, proposal, constitutions):
     return None
 
 def mfrs_03(executionUnitPrices, proposal, constitutions):
-    return "33" in proposal
+    proposalParameters = proposal["parameter_changes"]
+    return "33" in proposalParameters
 
 checkable = [
     { "name": "TFPB-01"
@@ -42,7 +43,7 @@ uncheckable = [
     , "function": tf_02
     },
     { "name": "MFRS-03"
-    , "description": "txFeePerByte should be adjusted in line with fiat changes"
+    , "description": "To maintain a consistent level of protection against denial-of-service attacks, minFeeRefScriptCoinsPerByte should be adjusted whenever Plutus Execution prices are adjusted (executionUnitPrices[steps/memory]) and whenever txFeePerByte is adjusted"
     , "function": mfrs_03
     }
 ]

@@ -21,8 +21,8 @@ def gal_04(govActionLifetime, proposal, constitutions):
     return None
 
 def gal_05(govActionLifetime, proposal, constitutions):
-    if "32" in proposal:
-        dRepActivity = proposal["32"]
+    if "32" in proposal["parameter_changes"]:
+        dRepActivity = proposal["parameter_changes"]["32"]
     else:
         dRepActivity = constitutions[-1]["parameters_values"]["32"]
     return govActionLifetime < dRepActivity

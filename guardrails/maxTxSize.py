@@ -29,7 +29,7 @@ def mts_02(maxTxSize, proposal, constitutions):
 
 def mts_03(maxTxSize, proposal, constitutions):
     latest_constitution = constitutions[-1]
-    return abs(maxTxSize - latest_constitution["parameters_values"]["3"])
+    return maxTxSize >= latest_constitution["parameters_values"]["3"]
 
 def mts_04(maxTxSize, proposal, constitutions):
     latest_constitution = constitutions[-1]
