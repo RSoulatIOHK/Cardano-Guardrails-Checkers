@@ -1,954 +1,816 @@
 {
     "txFeePerByte": {
-        "TFPB-01": {
-            "value": 44,
-            "result": true,
-            "description": "txFeePerByte must not be decreased below 30  (0.000030 Ada)",
-            "name": "TFPB-01"
+        "value": 44,
+        "guardrails": {
+            "TFPB-01": {
+                "result": true,
+                "description": "txFeePerByte must not be decreased below 30  (0.000030 Ada)",
+                "name": "TFPB-01"
+            },
+            "TFPB-02": {
+                "result": true,
+                "description": "txFeePerByte must not be increased above 1,000 (0.001 Ada)",
+                "name": "TFPB-02"
+            },
+            "TFPB-03": {
+                "result": true,
+                "description": "txFeePerByte must not be negative",
+                "name": "TFPB-03"
+            },
+            "TF-01": {
+                "result": true,
+                "description": "To maintain a consistent level of protection against denial-of-service attacks,  txFeePerByte and txFeeFixed should be adjusted whenever Plutus Execution prices are adjusted (executionUnitPrices[steps/memory])",
+                "name": "TF-01"
+            },
+            "TF-02": {
+                "result": null,
+                "description": "Any changes to txFeePerByte or txFeeFixed must consider the implications of reducing the cost of a denial-of-service attack or increasing the maximum transaction fee",
+                "name": "TF-02"
+            },
+            "MFRS-03": {
+                "result": true,
+                "description": "To maintain a consistent level of protection against denial-of-service attacks, minFeeRefScriptCoinsPerByte should be adjusted whenever Plutus Execution prices are adjusted (executionUnitPrices[steps/memory]) and whenever txFeePerByte is adjusted",
+                "name": "MFRS-03"
+            }
         },
-        "TFPB-02": {
-            "value": 44,
-            "result": true,
-            "description": "txFeePerByte must not be increased above 1,000 (0.001 Ada)",
-            "name": "TFPB-02"
-        },
-        "TFPB-03": {
-            "value": 44,
-            "result": true,
-            "description": "txFeePerByte must not be negative",
-            "name": "TFPB-03"
-        },
-        "TF-01": {
-            "value": 44,
-            "result": false,
-            "description": "To maintain a consistent level of protection against denial-of-service attacks,  txFeePerByte and txFeeFixed should be adjusted whenever Plutus Execution prices are adjusted (executionUnitPrices[steps/memory])",
-            "name": "TF-01"
-        },
-        "TF-02": {
-            "value": 44,
-            "result": null,
-            "description": "Any changes to txFeePerByte or txFeeFixed must consider the implications of reducing the cost of a denial-of-service attack or increasing the maximum transaction fee",
-            "name": "TF-02"
-        },
-        "MFRS-03": {
-            "value": 44,
-            "result": false,
-            "description": "txFeePerByte should be adjusted in line with fiat changes",
-            "name": "MFRS-03"
-        }
+        "summary": true
     },
     "txFeeFixed": {
-        "TFF-01": {
-            "value": 155381,
-            "result": true,
-            "description": "txFeeFixed must not be decreased below 100,000 (0.1 Ada)",
-            "name": "TFF-01"
+        "value": 155381,
+        "guardrails": {
+            "TFF-01": {
+                "result": true,
+                "description": "txFeeFixed must not be decreased below 100,000 (0.1 Ada)",
+                "name": "TFF-01"
+            },
+            "TFF-02": {
+                "result": true,
+                "description": "txFeeFixed must not be increased above 10,000,000 (10 Ada)",
+                "name": "TFF-02"
+            },
+            "TFF-03": {
+                "result": true,
+                "description": "txFeeFixed must not be negative",
+                "name": "TFF-03"
+            },
+            "TF-01": {
+                "result": true,
+                "description": "To maintain a consistent level of protection against denial-of-service attacks,  txFeePerByte and txFeeFixed should be adjusted whenever Plutus Execution prices are adjusted (executionUnitPrices[steps/memory])",
+                "name": "TF-01"
+            },
+            "TF-02": {
+                "result": null,
+                "description": "Any changes to txFeePerByte or txFeeFixed must consider the implications of reducing the cost of a denial-of-service attack or increasing the maximum transaction fee",
+                "name": "TF-02"
+            },
+            "MFRS-03": {
+                "result": true,
+                "description": "To maintain a consistent level of protection against denial-of-service attacks, minFeeRefScriptCoinsPerByte should be adjusted whenever Plutus Execution prices are adjusted (executionUnitPrices[steps/memory]) and whenever txFeePerByte is adjusted",
+                "name": "MFRS-03"
+            }
         },
-        "TFF-02": {
-            "value": 155381,
-            "result": true,
-            "description": "txFeeFixed must not be increased above 10,000,000 (10 Ada)",
-            "name": "TFF-02"
-        },
-        "TFF-03": {
-            "value": 155381,
-            "result": true,
-            "description": "txFeeFixed must not be negative",
-            "name": "TFF-03"
-        },
-        "TF-01": {
-            "value": 155381,
-            "result": false,
-            "description": "To maintain a consistent level of protection against denial-of-service attacks,  txFeePerByte and txFeeFixed should be adjusted whenever Plutus Execution prices are adjusted (executionUnitPrices[steps/memory])",
-            "name": "TF-01"
-        },
-        "TF-02": {
-            "value": 155381,
-            "result": null,
-            "description": "Any changes to txFeePerByte or txFeeFixed must consider the implications of reducing the cost of a denial-of-service attack or increasing the maximum transaction fee",
-            "name": "TF-02"
-        },
-        "MFRS-03": {
-            "value": 155381,
-            "result": false,
-            "description": "txFeeFixed should be adjusted in line with fiat changes",
-            "name": "MFRS-03"
-        }
+        "summary": true
     },
     "maxBlockBodySize": {
-        "MBBS-04": {
-            "value": 90112,
-            "result": true,
-            "description": "maxBlockBodySize must not exceed 122,880 Bytes (120KB)",
-            "name": "MBBS-04"
+        "value": 90112,
+        "guardrails": {
+            "MBBS-04": {
+                "result": true,
+                "description": "maxBlockBodySize must not exceed 122,880 Bytes (120KB)",
+                "name": "MBBS-04"
+            },
+            "MBBS-05": {
+                "result": true,
+                "description": "maxBlockBodySize must not be less than 24,576 Bytes (24KB)",
+                "name": "MBBS-05"
+            },
+            "MBBS-01": {
+                "result": true,
+                "description": "maxBlockBodySize must not be decreased, other than in exceptional circumstances",
+                "name": "MBBS-01"
+            },
+            "MBBS-02": {
+                "result": true,
+                "description": "maxBlockBodySize must be large enough to include at least one transaction plus the block header (maxBlockBodySize must be at least maxTxSize plus maxBlockHeaderSize)",
+                "name": "MBBS-02"
+            },
+            "MBBS-03": {
+                "result": 0,
+                "description": "maxBlockBodySize should be changed by at most 10,240 Bytes (10KB) per epoch (5 days), and preferably by 8,192 Bytes (8KB) or less per epoch",
+                "name": "MBBS-03"
+            },
+            "MBBS-06": {
+                "result": true,
+                "description": "maxBlockBodySize should not induce an additional TCP round trip.  Any increase beyond this needs careful analysis",
+                "name": "MBBS-06"
+            }
         },
-        "MBBS-05": {
-            "value": 90112,
-            "result": true,
-            "description": "maxBlockBodySize must not be less than 24,576 Bytes (24KB)",
-            "name": "MBBS-05"
-        },
-        "MBBS-01": {
-            "value": 90112,
-            "result": true,
-            "description": "maxBlockBodySize must not be decreased, other than in exceptional circumstances",
-            "name": "MBBS-01"
-        },
-        "MBBS-02": {
-            "value": 90112,
-            "result": true,
-            "description": "maxBlockBodySize must be large enough to include at least one transaction plus the block header (maxBlockBodySize must be at least maxTxSize plus maxBlockHeaderSize)",
-            "name": "MBBS-02"
-        },
-        "MBBS-03": {
-            "value": 90112,
-            "result": 0,
-            "description": "maxBlockBodySize should be changed by at most 10,240 Bytes (10KB) per epoch (5 days), and preferably by 8,192 Bytes (8KB) or less per epoch",
-            "name": "MBBS-03"
-        },
-        "MBBS-06": {
-            "value": 90112,
-            "result": true,
-            "description": "maxBlockBodySize should not induce an additional TCP round trip.  Any increase beyond this needs careful analysis",
-            "name": "MBBS-06"
-        }
+        "summary": true
     },
     "maxTxSize": {
-        "MTS-05": {
-            "value": 16384,
-            "result": true,
-            "description": "maxTxSize must not exceed 32,768 Bytes (32KB)",
-            "name": "MTS-05"
+        "value": 16384,
+        "guardrails": {
+            "MTS-05": {
+                "result": true,
+                "description": "maxTxSize must not exceed 32,768 Bytes (32KB)",
+                "name": "MTS-05"
+            },
+            "MTS-06": {
+                "result": true,
+                "description": "maxTxSize must not be negative",
+                "name": "MTS-06"
+            },
+            "MTS-01": {
+                "result": true,
+                "description": "maxTxSize must not be decreased, other than in exceptional circumstances",
+                "name": "MTS-01"
+            },
+            "MTS-02": {
+                "result": true,
+                "description": "maxTxSize must not exceed maxBlockBodySize minus maxBlockHeaderSize",
+                "name": "MTS-02"
+            },
+            "MTS-03": {
+                "result": true,
+                "description": "maxTxSize must not be increased",
+                "name": "MTS-03"
+            },
+            "MTS-04": {
+                "result": true,
+                "description": "maxTxSize must not exceed 1/4 of the block size",
+                "name": "MTS-04"
+            }
         },
-        "MTS-06": {
-            "value": 16384,
-            "result": true,
-            "description": "maxTxSize must not be negative",
-            "name": "MTS-06"
-        },
-        "MTS-01": {
-            "value": 16384,
-            "result": true,
-            "description": "maxTxSize must not be decreased, other than in exceptional circumstances",
-            "name": "MTS-01"
-        },
-        "MTS-02": {
-            "value": 16384,
-            "result": true,
-            "description": "maxTxSize must not exceed maxBlockBodySize minus maxBlockHeaderSize",
-            "name": "MTS-02"
-        },
-        "MTS-03": {
-            "value": 16384,
-            "result": 0,
-            "description": "maxTxSize must not be increased",
-            "name": "MTS-03"
-        },
-        "MTS-04": {
-            "value": 16384,
-            "result": true,
-            "description": "maxTxSize must not exceed 1/4 of the block size",
-            "name": "MTS-04"
-        }
+        "summary": true
     },
     "maxBlockHeaderSize": {
-        "MBHS-04": {
-            "value": 1100,
-            "result": true,
-            "description": "maxBlockHeaderSize must not exceed 5,000 Bytes",
-            "name": "MBHS-04"
+        "value": 1100,
+        "guardrails": {
+            "MBHS-04": {
+                "result": true,
+                "description": "maxBlockHeaderSize must not exceed 5,000 Bytes",
+                "name": "MBHS-04"
+            },
+            "MBHS-05": {
+                "result": true,
+                "description": "maxBlockHeaderSize must not be negative",
+                "name": "MBHS-05"
+            },
+            "MBHS-01": {
+                "result": true,
+                "description": "maxBlockHeaderSize must not be decreased, other than in exceptional circumstances",
+                "name": "MBHS-01"
+            },
+            "MBHS-02": {
+                "result": true,
+                "description": "maxBlockHeaderSize must not be less than the current maxBlockHeaderSize",
+                "name": "MBHS-02"
+            },
+            "MBHS-03": {
+                "result": 7,
+                "description": "maxBlockHeaderSize must be within TCP\u2019s initial congestion window (3 or 10 MTUs)",
+                "name": "MBHS-03"
+            }
         },
-        "MBHS-05": {
-            "value": 1100,
-            "result": true,
-            "description": "maxBlockHeaderSize must not be negative",
-            "name": "MBHS-05"
-        },
-        "MBHS-01": {
-            "value": 1100,
-            "result": true,
-            "description": "maxBlockHeaderSize must not be decreased, other than in exceptional circumstances",
-            "name": "MBHS-01"
-        },
-        "MBHS-02": {
-            "value": 1100,
-            "result": true,
-            "description": "maxBlockHeaderSize must not be less than the current maxBlockHeaderSize",
-            "name": "MBHS-02"
-        },
-        "MBHS-03": {
-            "value": 1100,
-            "result": 7,
-            "description": "maxBlockHeaderSize must be within TCP\u2019s initial congestion window (3 or 10 MTUs)",
-            "name": "MBHS-03"
-        }
+        "summary": true
     },
     "stakeAddressDeposit": {
-        "SAD-01": {
-            "value": 2000000,
-            "result": true,
-            "description": "stakeAddressDeposit must not be decreased below 1,000,000 (1 adaAda)",
-            "name": "SAD-01"
+        "value": 2000000,
+        "guardrails": {
+            "SAD-01": {
+                "result": true,
+                "description": "stakeAddressDeposit must not be decreased below 1,000,000 (1 adaAda)",
+                "name": "SAD-01"
+            },
+            "SAD-02": {
+                "result": true,
+                "description": "stakeAddressDeposit must not be increased above 5,000,000 (5 adaAda)",
+                "name": "SAD-02"
+            },
+            "SAD-03": {
+                "result": true,
+                "description": "stakeAddressDeposit must not be negative",
+                "name": "SAD-03"
+            }
         },
-        "SAD-02": {
-            "value": 2000000,
-            "result": true,
-            "description": "stakeAddressDeposit must not be increased above 5,000,000 (5 adaAda)",
-            "name": "SAD-02"
-        },
-        "SAD-03": {
-            "value": 2000000,
-            "result": true,
-            "description": "stakeAddressDeposit must not be negative",
-            "name": "SAD-03"
-        }
+        "summary": true
     },
     "stakePoolDeposit": {
-        "SPD-01": {
-            "value": 370000000,
-            "result": true,
-            "description": "stakePoolDeposit must not be decreased below 250,000,000 (250 adaAda)",
-            "name": "SPD-01"
+        "value": 370000000,
+        "guardrails": {
+            "SPD-01": {
+                "result": true,
+                "description": "stakePoolDeposit must not be decreased below 250,000,000 (250 adaAda)",
+                "name": "SPD-01"
+            },
+            "SPD-02": {
+                "result": true,
+                "description": "stakePoolDeposit must not be increased above 500,000,000 (500 adaAda)",
+                "name": "SPD-02"
+            },
+            "SPD-03": {
+                "result": true,
+                "description": "stakePoolDeposit must not be negative",
+                "name": "SPD-03"
+            }
         },
-        "SPD-02": {
-            "value": 370000000,
-            "result": true,
-            "description": "stakePoolDeposit must not be increased above 500,000,000 (500 adaAda)",
-            "name": "SPD-02"
-        },
-        "SPD-03": {
-            "value": 370000000,
-            "result": true,
-            "description": "stakePoolDeposit must not be negative",
-            "name": "SPD-03"
-        }
+        "summary": true
     },
     "poolRetireMaxEpoch": {
-        "PRME-02": {
-            "value": 18,
-            "result": true,
-            "description": "poolRetireMaxEpoch must not be negative",
-            "name": "PRME-02"
+        "value": 18,
+        "guardrails": {
+            "PRME-02": {
+                "result": true,
+                "description": "poolRetireMaxEpoch must not be negative",
+                "name": "PRME-02"
+            },
+            "PRME-01": {
+                "result": true,
+                "description": "poolRetireMaxEpoch must not be lower than 1",
+                "name": "PRME-01"
+            }
         },
-        "PRME-01": {
-            "value": 18,
-            "result": true,
-            "description": "poolRetireMaxEpoch must not be lower than 1",
-            "name": "PRME-01"
-        }
+        "summary": true
     },
     "stakePoolTargetNum": {
-        "SPTN-01": {
-            "value": 500,
-            "result": true,
-            "description": "stakePoolTargetNum must not be set below 250",
-            "name": "SPTN-01"
+        "value": 500,
+        "guardrails": {
+            "SPTN-01": {
+                "result": true,
+                "description": "stakePoolTargetNum must not be set below 250",
+                "name": "SPTN-01"
+            },
+            "SPTN-02": {
+                "result": true,
+                "description": "stakePoolTargetNum must not be set above 2,000",
+                "name": "SPTN-02"
+            }
         },
-        "SPTN-02": {
-            "value": 500,
-            "result": true,
-            "description": "stakePoolTargetNum must not be set above 2,000",
-            "name": "SPTN-02"
-        }
+        "summary": true
     },
     "poolPledgeInfluence": {
-        "PPI-02": {
-            "value": [
-                3,
-                10
-            ],
-            "result": true,
-            "description": "poolPledgeInfluence must not be set below 0.1",
-            "name": "PPI-02"
+        "value": [
+            3,
+            10
+        ],
+        "guardrails": {
+            "PPI-02": {
+                "result": true,
+                "description": "poolPledgeInfluence must not be set below 0.1",
+                "name": "PPI-02"
+            },
+            "PPI-03": {
+                "result": true,
+                "description": "poolPledgeInfluence must not exceed 1.0",
+                "name": "PPI-03"
+            },
+            "PPI-01": {
+                "result": true,
+                "description": "poolPledgeInfluence should not vary by more than +/- 10% in any 18-epoch period (approximately 3 months)",
+                "name": "PPI-01"
+            }
         },
-        "PPI-03": {
-            "value": [
-                3,
-                10
-            ],
-            "result": true,
-            "description": "poolPledgeInfluence must not exceed 1.0",
-            "name": "PPI-03"
-        },
-        "PPI-01": {
-            "value": [
-                3,
-                10
-            ],
-            "result": true,
-            "description": "poolPledgeInfluence should not vary by more than +/- 10% in any 18-epoch period (approximately 3 months)",
-            "name": "PPI-01"
-        }
+        "summary": true
     },
     "monetaryExpansion": {
-        "ME-01": {
-            "value": [
-                3,
-                1000
-            ],
-            "result": true,
-            "description": "monetaryExpansion must not exceed 0.005",
-            "name": "ME-01"
+        "value": [
+            3,
+            1000
+        ],
+        "guardrails": {
+            "ME-01": {
+                "result": true,
+                "description": "monetaryExpansion must not exceed 0.005",
+                "name": "ME-01"
+            },
+            "ME-02": {
+                "result": true,
+                "description": "monetaryExpansion must not be lower than 0.001",
+                "name": "ME-02"
+            },
+            "ME-03": {
+                "result": true,
+                "description": "monetaryExpansion must not be negative",
+                "name": "ME-03"
+            },
+            "ME-04": {
+                "result": true,
+                "description": "monetaryExpansion should not be varied by more than +/- 10% in any 73-epoch period (approximately 12 months period)",
+                "name": "ME-04"
+            }
         },
-        "ME-02": {
-            "value": [
-                3,
-                1000
-            ],
-            "result": true,
-            "description": "monetaryExpansion must not be lower than 0.001",
-            "name": "ME-02"
-        },
-        "ME-03": {
-            "value": [
-                3,
-                1000
-            ],
-            "result": true,
-            "description": "monetaryExpansion must not be negative",
-            "name": "ME-03"
-        },
-        "ME-04": {
-            "value": [
-                3,
-                1000
-            ],
-            "result": true,
-            "description": "monetaryExpansion should not be varied by more than +/- 10% in any 73-epoch period (approximately 12 months period)",
-            "name": "ME-04"
-        }
+        "summary": true
     },
     "treasuryCut": {
-        "TC-01": {
-            "value": [
-                2,
-                10
-            ],
-            "result": true,
-            "description": "treasuryCut must be set between 0.1 (10%) and 0.3 (30%)",
-            "name": "TC-01"
+        "value": [
+            2,
+            10
+        ],
+        "guardrails": {
+            "TC-01": {
+                "result": true,
+                "description": "treasuryCut must be set between 0.1 (10%) and 0.3 (30%)",
+                "name": "TC-01"
+            },
+            "TC-02": {
+                "result": true,
+                "description": "treasuryCut must not be negative",
+                "name": "TC-02"
+            },
+            "TC-03": {
+                "result": true,
+                "description": "treasuryCut must not exceed 1.0 (100%)",
+                "name": "TC-03"
+            },
+            "TC-04": {
+                "result": true,
+                "description": "treasuryCut must not be changed more than once in any 36 epoch period (approximately 6 months)",
+                "name": "TC-04"
+            }
         },
-        "TC-02": {
-            "value": [
-                2,
-                10
-            ],
-            "result": true,
-            "description": "treasuryCut must not be negative",
-            "name": "TC-02"
-        },
-        "TC-03": {
-            "value": [
-                2,
-                10
-            ],
-            "result": true,
-            "description": "treasuryCut must not exceed 1.0 (100%)",
-            "name": "TC-03"
-        },
-        "TC-04": {
-            "value": [
-                2,
-                10
-            ],
-            "result": true,
-            "description": "treasuryCut must not be changed more than once in any 36 epoch period (approximately 6 months)",
-            "name": "TC-04"
-        }
+        "summary": true
     },
     "minPoolCost": {
-        "MPC-01": {
-            "value": 340000000,
-            "result": true,
-            "description": "minPoolCost must not be negative",
-            "name": "MPC-01"
+        "value": 340000000,
+        "guardrails": {
+            "MPC-01": {
+                "result": true,
+                "description": "minPoolCost must not be negative",
+                "name": "MPC-01"
+            },
+            "MPC-02": {
+                "result": true,
+                "description": "minPoolCost must not be set above 500,000,000 (500 adaAda)",
+                "name": "MPC-02"
+            },
+            "MPC-03": {
+                "result": null,
+                "description": "minPoolCost should be set in line with the economic cost for operating a pool",
+                "name": "MPC-03"
+            }
         },
-        "MPC-02": {
-            "value": 340000000,
-            "result": true,
-            "description": "minPoolCost must not be set above 500,000,000 (500 adaAda)",
-            "name": "MPC-02"
-        },
-        "MPC-03": {
-            "value": 340000000,
-            "result": null,
-            "description": "minPoolCost should be set in line with the economic cost for operating a pool",
-            "name": "MPC-03"
-        }
+        "summary": true
     },
     "utxoCostPerByte": {
-        "UCPB-01": {
-            "value": 4310,
-            "result": true,
-            "description": "utxoCostPerByte must not be decreased below 3,000  (0.003 adaAda)",
-            "name": "UCPB-01"
+        "value": 4310,
+        "guardrails": {
+            "UCPB-01": {
+                "result": true,
+                "description": "utxoCostPerByte must not be decreased below 3,000  (0.003 adaAda)",
+                "name": "UCPB-01"
+            },
+            "UCPB-02": {
+                "result": true,
+                "description": "utxoCostPerByte must not be increased above 6,500  (0.0065 adaAda)",
+                "name": "UCPB-02"
+            },
+            "UCPB-03": {
+                "result": true,
+                "description": "utxoCostPerByte must not be set to zero",
+                "name": "UCPB-03"
+            },
+            "UCPB-04": {
+                "result": true,
+                "description": "utxoCostPerByte must not be negative",
+                "name": "UCPB-04"
+            },
+            "UCPB-05": {
+                "result": null,
+                "description": "Changes to utxoCostPerByte need to account for blablabla",
+                "name": "UCPB-05"
+            }
         },
-        "UCPB-02": {
-            "value": 4310,
-            "result": true,
-            "description": "utxoCostPerByte must not be increased above 6,500  (0.0065 adaAda)",
-            "name": "UCPB-02"
-        },
-        "UCPB-03": {
-            "value": 4310,
-            "result": true,
-            "description": "utxoCostPerByte must not be set to zero",
-            "name": "UCPB-03"
-        },
-        "UCPB-04": {
-            "value": 4310,
-            "result": true,
-            "description": "utxoCostPerByte must not be negative",
-            "name": "UCPB-04"
-        },
-        "UCPB-05": {
-            "value": 4310,
-            "result": null,
-            "description": "Changes to utxoCostPerByte need to account for blablabla",
-            "name": "UCPB-05"
-        }
+        "summary": true
     },
     "costModels": {
-        "CM-01": {
-            "value": {},
-            "result": true,
-            "description": "Cost model values must be set by benchmarking on a reference architecture",
-            "name": "CM-01"
+        "value": {},
+        "guardrails": {
+            "CM-01": {
+                "result": true,
+                "description": "Cost model values must be set by benchmarking on a reference architecture",
+                "name": "CM-01"
+            },
+            "CM-02": {
+                "result": true,
+                "description": "The cost model must be updated if new primitives are introduced or a new Plutus language version is added",
+                "name": "CM-02"
+            },
+            "CM-03": {
+                "result": true,
+                "description": "Cost model values must not be negative",
+                "name": "CM-03"
+            },
+            "CM-04": {
+                "result": true,
+                "description": "A cost model must be supplied for each Plutus language version that the protocol supports",
+                "name": "CM-04"
+            }
         },
-        "CM-02": {
-            "value": {},
-            "result": true,
-            "description": "The cost model must be updated if new primitives are introduced or a new Plutus language version is added",
-            "name": "CM-02"
-        },
-        "CM-03": {
-            "value": {},
-            "result": true,
-            "description": "Cost model values must not be negative",
-            "name": "CM-03"
-        },
-        "CM-04": {
-            "value": {},
-            "result": true,
-            "description": "A cost model must be supplied for each Plutus language version that the protocol supports",
-            "name": "CM-04"
-        }
+        "summary": true
     },
     "executionIUnitPrices": {
-        "EUP-PS-01": {
-            "value": {
-                "mem_price": [
-                    577,
-                    10000
-                ],
-                "step_price": [
-                    721,
-                    10000000
-                ]
-            },
-            "result": true,
-            "description": "executionUnitPrices[step_price] must not exceed 2,000 / 10,000,000",
-            "name": "EUP-PS-01"
+        "value": {
+            "mem_price": [
+                577,
+                10000
+            ],
+            "step_price": [
+                721,
+                10000000
+            ]
         },
-        "EUP-PS-02": {
-            "value": {
-                "mem_price": [
-                    577,
-                    10000
-                ],
-                "step_price": [
-                    721,
-                    10000000
-                ]
+        "guardrails": {
+            "EUP-PS-01": {
+                "result": true,
+                "description": "executionUnitPrices[step_price] must not exceed 2,000 / 10,000,000",
+                "name": "EUP-PS-01"
             },
-            "result": true,
-            "description": "executionUnitPrices[step_price] must not be lower than 500 / 10,000,000",
-            "name": "EUP-PS-02"
+            "EUP-PS-02": {
+                "result": true,
+                "description": "executionUnitPrices[step_price] must not be lower than 500 / 10,000,000",
+                "name": "EUP-PS-02"
+            },
+            "EUP-PM-01": {
+                "result": true,
+                "description": "executionUnitPrices[mem_price] must not exceed 2,000 / 10,000",
+                "name": "EUP-PM-01"
+            },
+            "EUP-PM-02": {
+                "result": true,
+                "description": "executionUnitPrices[mem_price] must not be lower than 400 / 10,000",
+                "name": "EUP-PM-02"
+            },
+            "EUP-01": {
+                "result": null,
+                "description": "The execution prices must be set so that the cost of executing a transaction with maximum CPU steps is similar to the cost of a maximum sized non-script transaction and the cost of executing a transaction with maximum memory units is similar to the cost of a maximum sized non-script transaction",
+                "name": "EUP-01"
+            },
+            "EUP-02": {
+                "result": true,
+                "description": "The execution prices should be adjusted whenever transaction fees are adjusted (txFeeFixed/txFeePerByte)",
+                "name": "EUP-02"
+            },
+            "MFRS-03": {
+                "result": true,
+                "description": "To maintain a consistent level of protection against denial-of-service attacks, minFeeRefScriptCoinsPerByte should be adjusted whenever Plutus Execution prices are adjusted (executionUnitPrices[steps/memory]) and whenever txFeePerByte is adjusted",
+                "name": "MFRS-03"
+            }
         },
-        "EUP-PM-01": {
-            "value": {
-                "mem_price": [
-                    577,
-                    10000
-                ],
-                "step_price": [
-                    721,
-                    10000000
-                ]
-            },
-            "result": true,
-            "description": "executionUnitPrices[mem_price] must not exceed 2,000 / 10,000",
-            "name": "EUP-PM-01"
-        },
-        "EUP-PM-02": {
-            "value": {
-                "mem_price": [
-                    577,
-                    10000
-                ],
-                "step_price": [
-                    721,
-                    10000000
-                ]
-            },
-            "result": true,
-            "description": "executionUnitPrices[mem_price] must not be lower than 400 / 10,000",
-            "name": "EUP-PM-02"
-        },
-        "EUP-01": {
-            "value": {
-                "mem_price": [
-                    577,
-                    10000
-                ],
-                "step_price": [
-                    721,
-                    10000000
-                ]
-            },
-            "result": null,
-            "description": "The execution prices must be set so that the cost of executing a transaction with maximum CPU steps is similar to the cost of a maximum sized non-script transaction and the cost of executing a transaction with maximum memory units is similar to the cost of a maximum sized non-script transaction",
-            "name": "EUP-01"
-        },
-        "EUP-02": {
-            "value": {
-                "mem_price": [
-                    577,
-                    10000
-                ],
-                "step_price": [
-                    721,
-                    10000000
-                ]
-            },
-            "result": false,
-            "description": "The execution prices should be adjusted whenever transaction fees are adjusted (txFeeFixed/txFeePerByte)",
-            "name": "EUP-02"
-        },
-        "MFRS-03": {
-            "value": {
-                "mem_price": [
-                    577,
-                    10000
-                ],
-                "step_price": [
-                    721,
-                    10000000
-                ]
-            },
-            "result": false,
-            "description": "To maintain a consistent level of protection against denial-of-service attacks, minFeeRefScriptCoinsPerByte should be adjusted whenever Plutus Execution prices are adjusted (executionUnitPrices[steps/memory]) and whenever txFeePerByte is adjusted",
-            "name": "MFRS-03"
-        }
+        "summary": true
     },
     "maxTxExecutionUnits": {
-        "MTEU-M-01": {
-            "value": {
-                "mem": 14000000,
-                "steps": 10000000000
-            },
-            "result": true,
-            "description": "maxTxExecutionUnits[memory] must not exceed 40,000,000 units",
-            "name": "MTEU-M-01"
+        "value": {
+            "mem": 14000000,
+            "steps": 10000000000
         },
-        "MTEU-M-02": {
-            "value": {
-                "mem": 14000000,
-                "steps": 10000000000
+        "guardrails": {
+            "MTEU-M-01": {
+                "result": true,
+                "description": "maxTxExecutionUnits[memory] must not exceed 40,000,000 units",
+                "name": "MTEU-M-01"
             },
-            "result": true,
-            "description": "maxTxExecutionUnits[memory] must not be negative",
-            "name": "MTEU-M-02"
+            "MTEU-M-02": {
+                "result": true,
+                "description": "maxTxExecutionUnits[memory] must not be negative",
+                "name": "MTEU-M-02"
+            },
+            "MTEU-S-01": {
+                "result": true,
+                "description": "maxTxExecutionUnits[steps] must not exceed 15,000,000,000 units",
+                "name": "MTEU-S-01"
+            },
+            "MTEU-S-02": {
+                "result": true,
+                "description": "maxTxExecutionUnits[steps] must not be negative",
+                "name": "MTEU-S-02"
+            },
+            "MTEU-M-03": {
+                "result": true,
+                "description": "maxTxExecutionUnits[memory] must not be decreased",
+                "name": "MTEU-M-03"
+            },
+            "MTEU-M-04": {
+                "result": true,
+                "description": "maxTxExecutionUnits[memory] should not be increased by more than 2,500,000 units in any epoch",
+                "name": "MTEU-M-04"
+            },
+            "MTEU-M-05": {
+                "result": true,
+                "description": "maxTxExecutionUnits[memory] must not exceed the value of the latest constitution",
+                "name": "MTEU-M-05"
+            },
+            "MTEU-S-03": {
+                "result": true,
+                "description": "maxTxExecutionUnits[steps] should not be changed (increased or decreased) by more than the value of the latest constitution",
+                "name": "MTEU-S-03"
+            },
+            "MTEU-S-04": {
+                "result": true,
+                "description": "maxTxExecutionUnits[steps] should not be increased by more than 500,000,000 units in any epoch",
+                "name": "MTEU-S-04"
+            },
+            "MTEU-S-05": {
+                "result": true,
+                "description": "maxTxExecutionUnits[steps] must not exceed the value of the latest constitution",
+                "name": "MTEU-S-05"
+            }
         },
-        "MTEU-S-01": {
-            "value": {
-                "mem": 14000000,
-                "steps": 10000000000
-            },
-            "result": true,
-            "description": "maxTxExecutionUnits[steps] must not exceed 15,000,000,000 units",
-            "name": "MTEU-S-01"
-        },
-        "MTEU-S-02": {
-            "value": {
-                "mem": 14000000,
-                "steps": 10000000000
-            },
-            "result": true,
-            "description": "maxTxExecutionUnits[steps] must not be negative",
-            "name": "MTEU-S-02"
-        },
-        "MTEU-M-03": {
-            "value": {
-                "mem": 14000000,
-                "steps": 10000000000
-            },
-            "result": false,
-            "description": "maxTxExecutionUnits[memory] should not be changed (increased or decreased) by more than the value of the latest constitution",
-            "name": "MTEU-M-03"
-        },
-        "MTEU-M-04": {
-            "value": {
-                "mem": 14000000,
-                "steps": 10000000000
-            },
-            "result": true,
-            "description": "maxTxExecutionUnits[memory] should not be increased by more than 2,500,000 units in any epoch",
-            "name": "MTEU-M-04"
-        },
-        "MTEU-M-05": {
-            "value": {
-                "mem": 14000000,
-                "steps": 10000000000
-            },
-            "result": true,
-            "description": "maxTxExecutionUnits[memory] must not exceed the value of the latest constitution",
-            "name": "MTEU-M-05"
-        },
-        "MTEU-S-03": {
-            "value": {
-                "mem": 14000000,
-                "steps": 10000000000
-            },
-            "result": false,
-            "description": "maxTxExecutionUnits[steps] should not be changed (increased or decreased) by more than the value of the latest constitution",
-            "name": "MTEU-S-03"
-        },
-        "MTEU-S-04": {
-            "value": {
-                "mem": 14000000,
-                "steps": 10000000000
-            },
-            "result": true,
-            "description": "maxTxExecutionUnits[steps] should not be increased by more than 500,000,000 units in any epoch",
-            "name": "MTEU-S-04"
-        },
-        "MTEU-S-05": {
-            "value": {
-                "mem": 14000000,
-                "steps": 10000000000
-            },
-            "result": true,
-            "description": "maxTxExecutionUnits[steps] must not exceed the value of the latest constitution",
-            "name": "MTEU-S-05"
-        }
+        "summary": true
     },
     "maxBlockExecutionUnits": {
-        "MBEU-M-01": {
-            "value": {
-                "mem": 62000000,
-                "steps": 20000000000
-            },
-            "result": true,
-            "description": "maxBlockExecutionUnits[memory] must not exceed 120,000,000 units",
-            "name": "MBEU-M-01"
+        "value": {
+            "mem": 62000000,
+            "steps": 20000000000
         },
-        "MBEU-M-02": {
-            "value": {
-                "mem": 62000000,
-                "steps": 20000000000
+        "guardrails": {
+            "MBEU-M-01": {
+                "result": true,
+                "description": "maxBlockExecutionUnits[memory] must not exceed 120,000,000 units",
+                "name": "MBEU-M-01"
             },
-            "result": true,
-            "description": "maxBlockExecutionUnits[memory] must not be negative",
-            "name": "MBEU-M-02"
+            "MBEU-M-02": {
+                "result": true,
+                "description": "maxBlockExecutionUnits[memory] must not be negative",
+                "name": "MBEU-M-02"
+            },
+            "MBEU-S-01": {
+                "result": true,
+                "description": "maxBlockExecutionUnits[steps] must not exceed 40,000,000,000 units",
+                "name": "MBEU-S-01"
+            },
+            "MBEU-S-02": {
+                "result": true,
+                "description": "maxBlockExecutionUnits[steps] must not be negative",
+                "name": "MBEU-S-02"
+            },
+            "MBEU-M-03": {
+                "result": true,
+                "description": "maxBlockExecutionUnits[memory] should not be changed (increased or decreased) by more than 10,000,000 units in any epoch",
+                "name": "MBEU-M-03"
+            },
+            "MBEU-M-04": {
+                "result": true,
+                "description": "maxBlockExecutionUnits[memory] should not be decreased",
+                "name": "MBEU-M-04"
+            },
+            "MBEU-S-03": {
+                "result": true,
+                "description": "maxBlockExecutionUnits[steps] should not be changed  (increased or decreased) by more than 2,000,000,000 (2Bn) units in any epoch",
+                "name": "MBEU-S-03"
+            },
+            "MBEU-S-04": {
+                "result": true,
+                "description": "maxBlockExecutionUnits[steps] should not be decreased",
+                "name": "MBEU-S-04"
+            }
         },
-        "MBEU-S-01": {
-            "value": {
-                "mem": 62000000,
-                "steps": 20000000000
-            },
-            "result": true,
-            "description": "maxBlockExecutionUnits[steps] must not exceed 40,000,000,000 units",
-            "name": "MBEU-S-01"
-        },
-        "MBEU-S-02": {
-            "value": {
-                "mem": 62000000,
-                "steps": 20000000000
-            },
-            "result": true,
-            "description": "maxBlockExecutionUnits[steps] must not be negative",
-            "name": "MBEU-S-02"
-        },
-        "MBEU-M-03": {
-            "value": {
-                "mem": 62000000,
-                "steps": 20000000000
-            },
-            "result": true,
-            "description": "maxBlockExecutionUnits[memory] should not be changed (increased or decreased) by more than 10,000,000 units in any epoch",
-            "name": "MBEU-M-03"
-        },
-        "MBEU-M-04": {
-            "value": {
-                "mem": 62000000,
-                "steps": 20000000000
-            },
-            "result": true,
-            "description": "maxBlockExecutionUnits[memory] should not be decreased",
-            "name": "MBEU-M-04"
-        },
-        "MBEU-S-03": {
-            "value": {
-                "mem": 62000000,
-                "steps": 20000000000
-            },
-            "result": true,
-            "description": "maxBlockExecutionUnits[steps] should not be changed  (increased or decreased) by more than 2,000,000,000 (2Bn) units in any epoch",
-            "name": "MBEU-S-03"
-        },
-        "MBEU-S-04": {
-            "value": {
-                "mem": 62000000,
-                "steps": 20000000000
-            },
-            "result": true,
-            "description": "maxBlockExecutionUnits[steps] should not be decreased",
-            "name": "MBEU-S-04"
-        }
+        "summary": true
     },
     "maxValueSize": {
-        "MVS-01": {
-            "value": 5000,
-            "result": true,
-            "description": "maxValueSize must not exceed 12,288 Bytes (12KB)",
-            "name": "MVS-01"
+        "value": 5000,
+        "guardrails": {
+            "MVS-01": {
+                "result": true,
+                "description": "maxValueSize must not exceed 12,288 Bytes (12KB)",
+                "name": "MVS-01"
+            },
+            "MVS-02": {
+                "result": true,
+                "description": "maxValueSize must not be negative",
+                "name": "MVS-02"
+            },
+            "MVS-04": {
+                "result": true,
+                "description": "maxValueSize must never be reduced",
+                "name": "MVS-04"
+            },
+            "MVS-05": {
+                "result": null,
+                "description": "maxValueSize must be large enough to allow sensible outputs (e.g. any existing on-chain output or anticipated outputs that could be produced by new ledger rules)",
+                "name": "MVS-05"
+            },
+            "MVS-03": {
+                "result": true,
+                "description": "maxValueSize must be less than maxTxSize",
+                "name": "MVS-03"
+            }
         },
-        "MVS-02": {
-            "value": 5000,
-            "result": true,
-            "description": "maxValueSize must not be negative",
-            "name": "MVS-02"
-        },
-        "MVS-03": {
-            "value": 5000,
-            "result": false,
-            "description": "maxValueSize must never be reduced",
-            "name": "MVS-03"
-        },
-        "MVS-04": {
-            "value": 5000,
-            "result": false,
-            "description": "maxValueSize must be large enough to allow sensible outputs (e.g. any existing on-chain output or anticipated outputs that could be produced by new ledger rules)",
-            "name": "MVS-04"
-        },
-        "MVS-05": {
-            "value": 5000,
-            "result": null,
-            "description": "maxValueSize must be less than maxTxSize",
-            "name": "MVS-05"
-        }
+        "summary": true
     },
     "collateralPercentage": {
-        "CP-01": {
-            "value": 150,
-            "result": true,
-            "description": "collateralPercentage must not be reduced below 100",
-            "name": "CP-01"
+        "value": 150,
+        "guardrails": {
+            "CP-01": {
+                "result": true,
+                "description": "collateralPercentage must not be reduced below 100",
+                "name": "CP-01"
+            },
+            "CP-02": {
+                "result": true,
+                "description": "collateralPercentage must not be set above 200",
+                "name": "CP-02"
+            },
+            "CP-03": {
+                "result": true,
+                "description": "collateralPercentage must not be negative or zero",
+                "name": "CP-03"
+            }
         },
-        "CP-02": {
-            "value": 150,
-            "result": true,
-            "description": "collateralPercentage must not be set above 200",
-            "name": "CP-02"
-        },
-        "CP-03": {
-            "value": 150,
-            "result": true,
-            "description": "collateralPercentage must not be negative or zero",
-            "name": "CP-03"
-        }
+        "summary": true
     },
     "maxCollateralInputs": {
-        "MCI-01": {
-            "value": 20,
-            "result": true,
-            "description": "maxCollateralInputs must not be reduced below 1",
-            "name": "MCI-01"
-        }
+        "value": 20,
+        "guardrails": {
+            "MCI-01": {
+                "result": true,
+                "description": "maxCollateralInputs must not be reduced below 1",
+                "name": "MCI-01"
+            }
+        },
+        "summary": true
     },
     "poolVotingThresholds": null,
     "dRepVotingThresholds": null,
     "committeeMinSize": {
-        "CMS-01": {
-            "value": 8,
-            "result": true,
-            "description": "committeeMinSize must not be negative",
-            "name": "CMS-01"
+        "value": 8,
+        "guardrails": {
+            "CMS-01": {
+                "result": true,
+                "description": "committeeMinSize must not be negative",
+                "name": "CMS-01"
+            },
+            "CMS-02": {
+                "result": true,
+                "description": "committeeMinSize must not be less than 3",
+                "name": "CMS-02"
+            },
+            "CMS-03": {
+                "result": true,
+                "description": "committeeMinSize must not be more than 10",
+                "name": "CMS-03"
+            }
         },
-        "CMS-02": {
-            "value": 8,
-            "result": true,
-            "description": "committeeMinSize must not be less than 3",
-            "name": "CMS-02"
-        },
-        "CMS-03": {
-            "value": 8,
-            "result": true,
-            "description": "committeeMinSize must not be more than 10",
-            "name": "CMS-03"
-        }
+        "summary": true
     },
     "committeeMaxTermLimit": {
-        "CMTL-01": {
-            "value": 155,
-            "result": true,
-            "description": "committeeMaxTermLimit must not be zero or negative",
-            "name": "CMTL-01"
+        "value": 155,
+        "guardrails": {
+            "CMTL-01": {
+                "result": true,
+                "description": "committeeMaxTermLimit must not be zero or negative",
+                "name": "CMTL-01"
+            },
+            "CMTL-02": {
+                "result": true,
+                "description": "committeeMaxTermLimit must not be less than 18 epochs (90 days, or approximately 3 months)",
+                "name": "CMTL-02"
+            },
+            "CMTL-03": {
+                "result": true,
+                "description": "committeeMaxTermLimit must not be more than 293 epochs (approximately 4 years)",
+                "name": "CMTL-03"
+            },
+            "CMTL-04": {
+                "result": true,
+                "description": "committeeMaxTermLimit should not be more than 220 epochs (approximately 3 years)",
+                "name": "CMTL-04"
+            }
         },
-        "CMTL-02": {
-            "value": 155,
-            "result": true,
-            "description": "committeeMaxTermLimit must not be less than 18 epochs (90 days, or approximately 3 months)",
-            "name": "CMTL-02"
-        },
-        "CMTL-03": {
-            "value": 155,
-            "result": true,
-            "description": "committeeMaxTermLimit must not be more than 293 epochs (approximately 4 years)",
-            "name": "CMTL-03"
-        },
-        "CMTL-04": {
-            "value": 155,
-            "result": true,
-            "description": "committeeMaxTermLimit should not be more than 220 epochs (approximately 3 years)",
-            "name": "CMTL-04"
-        }
+        "summary": true
     },
     "govActionLifetime": {
-        "GAL-01": {
-            "value": 13,
-            "result": true,
-            "description": "govActionLifetime must not be less than 1 epoch (5 days)",
-            "name": "GAL-01"
+        "value": 13,
+        "guardrails": {
+            "GAL-01": {
+                "result": true,
+                "description": "govActionLifetime must not be less than 1 epoch (5 days)",
+                "name": "GAL-01"
+            },
+            "GAL-02": {
+                "result": true,
+                "description": "govActionLifetime must not be greater than 15 epochs (75 days)",
+                "name": "GAL-02"
+            },
+            "GAL-03": {
+                "result": true,
+                "description": "govActionLifetime should not be less than 2 epochs (10 days)",
+                "name": "GAL-03"
+            },
+            "GAL-04": {
+                "result": null,
+                "description": "govActionLifetime should be calibrated in human terms (eg 30 days, two weeks), to allow sufficient time for voting etc. to take place",
+                "name": "GAL-04"
+            },
+            "GAL-05": {
+                "result": true,
+                "description": "govActionLifetime must be less than dRepActivity",
+                "name": "GAL-05"
+            }
         },
-        "GAL-02": {
-            "value": 13,
-            "result": true,
-            "description": "govActionLifetime must not be greater than 15 epochs (75 days)",
-            "name": "GAL-02"
-        },
-        "GAL-03": {
-            "value": 13,
-            "result": true,
-            "description": "govActionLifetime should not be less than 2 epochs (10 days)",
-            "name": "GAL-03"
-        },
-        "GAL-04": {
-            "value": 13,
-            "result": null,
-            "description": "govActionLifetime should be calibrated in human terms (eg 30 days, two weeks), to allow sufficient time for voting etc. to take place",
-            "name": "GAL-04"
-        },
-        "GAL-05": {
-            "value": 13,
-            "result": false,
-            "description": "govActionLifetime must be less than dRepActivity",
-            "name": "GAL-05"
-        }
+        "summary": true
     },
     "govDeposit": {
-        "GD-01": {
-            "value": 150000000000,
-            "result": true,
-            "description": "govDeposit must not be negative",
-            "name": "GD-01"
+        "value": 150000000000,
+        "guardrails": {
+            "GD-01": {
+                "result": true,
+                "description": "govDeposit must not be negative",
+                "name": "GD-01"
+            },
+            "GD-02": {
+                "result": true,
+                "description": "govDeposit must not be reduced below 1,000,000 (1 ada)",
+                "name": "GD-02"
+            },
+            "GD-03": {
+                "result": true,
+                "description": "govDeposit must not be more than 10,000,000,000,000 (10 Million ada)",
+                "name": "GD-03"
+            },
+            "GD-04": {
+                "result": null,
+                "description": "govDeposit should be adjusted in line with fiat changes",
+                "name": "GD-04"
+            }
         },
-        "GD-02": {
-            "value": 150000000000,
-            "result": true,
-            "description": "govDeposit must not be reduced below 1,000,000 (1 ada)",
-            "name": "GD-02"
-        },
-        "GD-03": {
-            "value": 150000000000,
-            "result": true,
-            "description": "govDeposit must not be more than 10,000,000,000,000 (10 Million ada)",
-            "name": "GD-03"
-        },
-        "GD-04": {
-            "value": 150000000000,
-            "result": null,
-            "description": "govDeposit should be adjusted in line with fiat changes",
-            "name": "GD-04"
-        }
+        "summary": true
     },
     "dRepDeposit": {
-        "DRD-01": {
-            "value": 50000,
-            "result": true,
-            "description": "dRepDeposit must not be negative",
-            "name": "DRD-01"
+        "value": 50000,
+        "guardrails": {
+            "DRD-01": {
+                "result": true,
+                "description": "dRepDeposit must not be negative",
+                "name": "DRD-01"
+            },
+            "DRD-02": {
+                "result": false,
+                "description": "dRepDeposit must not be reduced below 1,000,000 (1 ada)",
+                "name": "DRD-02"
+            },
+            "DRD-03": {
+                "result": true,
+                "description": "dRepDeposit must be no more than 100,000,000,000 (100,000 ada)",
+                "name": "DRD-03"
+            },
+            "DRD-04": {
+                "result": null,
+                "description": "dRepDeposit should be adjusted in line with fiat changes",
+                "name": "DRD-04"
+            }
         },
-        "DRD-02": {
-            "value": 50000,
-            "result": false,
-            "description": "dRepDeposit must not be reduced below 1,000,000 (1 ada)",
-            "name": "DRD-02"
-        },
-        "DRD-03": {
-            "value": 50000,
-            "result": true,
-            "description": "dRepDeposit must be no more than 100,000,000,000 (100,000 ada)",
-            "name": "DRD-03"
-        },
-        "DRD-04": {
-            "value": 50000,
-            "result": null,
-            "description": "dRepDeposit should be adjusted in line with fiat changes",
-            "name": "DRD-04"
-        }
+        "summary": false
     },
     "dRepActivity": {
-        "DRA-01": {
-            "value": 25,
-            "result": true,
-            "description": "dRepActivity must not be less than 13 epochs (2 months)",
-            "name": "DRA-01"
+        "value": 25,
+        "guardrails": {
+            "DRA-01": {
+                "result": true,
+                "description": "dRepActivity must not be less than 13 epochs (2 months)",
+                "name": "DRA-01"
+            },
+            "DRA-02": {
+                "result": true,
+                "description": "dRepActivity must not exceed 37 epochs (6 months)",
+                "name": "DRA-02"
+            },
+            "DRA-03": {
+                "result": true,
+                "description": "dRepActivity must not be negative",
+                "name": "DRA-03"
+            },
+            "DRA-04": {
+                "result": true,
+                "description": "dRepActivity must be greater than govActionLifetime",
+                "name": "DRA-04"
+            },
+            "DRA-05": {
+                "result": null,
+                "description": "dRepActivity should be calculated in human terms (2 months etc)",
+                "name": "DRA-05"
+            }
         },
-        "DRA-02": {
-            "value": 25,
-            "result": true,
-            "description": "dRepActivity must not exceed 37 epochs (6 months)",
-            "name": "DRA-02"
-        },
-        "DRA-03": {
-            "value": 25,
-            "result": true,
-            "description": "dRepActivity must not be negative",
-            "name": "DRA-03"
-        },
-        "DRA-04": {
-            "value": 25,
-            "result": true,
-            "description": "dRepActivity must be greater than govActionLifetime",
-            "name": "DRA-04"
-        },
-        "DRA-05": {
-            "value": 25,
-            "result": null,
-            "description": "dRepActivity should be calculated in human terms (2 months etc)",
-            "name": "DRA-05"
-        }
+        "summary": true
     },
     "minFeeRefScriptCoinsPerByte": {
-        "MFRS-01": {
-            "value": 250,
-            "result": true,
-            "description": "minFeeRefScriptCoinsPerByte must not be increased above 1,000  (0.001 ada)",
-            "name": "MFRS-01"
+        "value": 250,
+        "guardrails": {
+            "MFRS-01": {
+                "result": true,
+                "description": "minFeeRefScriptCoinsPerByte must not be increased above 1,000  (0.001 ada)",
+                "name": "MFRS-01"
+            },
+            "MFRS-02": {
+                "result": true,
+                "description": "minFeeRefScriptCoinsPerByte must not be negative",
+                "name": "MFRS-02"
+            },
+            "MFRS-04": {
+                "result": null,
+                "description": "Any changes to minFeeRefScriptCoinsPerByte must consider the implications of reducing the cost of a denial-of-service attack or increasing the maximum transaction fee",
+                "name": "MFRS-04"
+            }
         },
-        "MFRS-02": {
-            "value": 250,
-            "result": true,
-            "description": "minFeeRefScriptCoinsPerByte must not be negative",
-            "name": "MFRS-02"
-        },
-        "MFRS-04": {
-            "value": 250,
-            "result": null,
-            "description": "Any changes to minFeeRefScriptCoinsPerByte must consider the implications of reducing the cost of a denial-of-service attack or increasing the maximum transaction fee",
-            "name": "MFRS-04"
-        }
+        "summary": true
     }
 }

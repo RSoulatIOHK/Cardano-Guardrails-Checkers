@@ -191,7 +191,39 @@ def addUncheckableCheck(proposal, all_constitutions, checks):
         checks[paramMap[key]["name"]]["guardrails"].update(results["guardrails"])
     return checks
 
-def checkProposal(pathfile='./data/proposal.json', outfile='./data/checks.json'):
+def checkProposalReturnFile(pathfile='./data/proposal.json', outfile='checks'):
+    checks = {}
+    infile = pathfile.split('/')[-1]
+    outfile = infile.split('.')[0]
+
+    with ExitStack() as stack:
+        all_constitutions_files = [stack.enter_context(open(f'./constitutions/constitution_{i}.json')) for i in range(1, 3)]
+        all_constitutions = [json.load(f) for f in all_constitutions_files]
+        with open(pathfile) as f:
+            proposal = json.load(f)
+            current_parameter_proposal = proposal["parameter_changes"]
+        
+        # Static checks
+        checks = addStaticCheck(current_parameter_proposal, checks)
+        
+        # All "uncheckable" checks
+        checks = addUncheckableCheck(proposal, all_constitutions, checks)
+
+        # For all the parameters add a "summary" field with True if all guardrails are True, False if any guardrail is False
+        for parameter in checks:
+            if checks[parameter] is not None:
+                for guardrail in checks[parameter]["guardrails"]:
+                    checks[parameter]["summary"] = True
+                    result = checks[parameter]["guardrails"][guardrail]["result"]
+                    if isinstance(result, bool) and not result:
+                        checks[parameter]["summary"] = False
+                        break
+            else:
+                pass                
+    json.dump(checks, open("./data/checks_" + outfile + ".json", 'w'), indent=4)
+    return outfile
+
+def checkProposalReturnJSON(pathfile='./data/proposal.json'):
     checks = {}
     with ExitStack() as stack:
         all_constitutions_files = [stack.enter_context(open(f'./constitutions/constitution_{i}.json')) for i in range(1, 3)]
@@ -217,8 +249,36 @@ def checkProposal(pathfile='./data/proposal.json', outfile='./data/checks.json')
                         break
             else:
                 pass                
-    json.dump(checks, open(outfile, 'w'), indent=4)
-    return outfile
+    return checks
+
+def checkProposalJSON(proposal):
+    checks = {}
+    with ExitStack() as stack:
+        all_constitutions_files = [stack.enter_context(open(f'./constitutions/constitution_{i}.json')) for i in range(1, 3)]
+        all_constitutions = [json.load(f) for f in all_constitutions_files]
+    
+ 
+        current_parameter_proposal = proposal["parameter_changes"]
+        
+        # Static checks
+        checks = addStaticCheck(current_parameter_proposal, checks)
+        
+        # All "uncheckable" checks
+        checks = addUncheckableCheck(proposal, all_constitutions, checks)
+
+        # For all the parameters add a "summary" field with True if all guardrails are True, False if any guardrail is False
+        for parameter in checks:
+            if checks[parameter] is not None:
+                for guardrail in checks[parameter]["guardrails"]:
+                    checks[parameter]["summary"] = True
+                    result = checks[parameter]["guardrails"][guardrail]["result"]
+                    if isinstance(result, bool) and not result:
+                        checks[parameter]["summary"] = False
+                        break
+            else:
+                pass                
+    return checks
+
 
 if __name__ == "__main__":
     checkProposal()

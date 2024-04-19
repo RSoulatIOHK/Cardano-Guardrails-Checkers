@@ -1,15 +1,234 @@
-
+{% from 'bootstrap5/form.html' import render_form  %}
 <html>   
 <head>   
-    <title>Upload a Protocol Parameter Proposal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="UTF-8" />   
+    <title>Parameter Proposal Checker</title>   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: rgba(143, 0, 0, 0.638);
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0px;
+        }
+
+        .upload-container {
+            margin-right: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        .form-container {
+            margin-right: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: rgba(143, 0, 0, 0.6);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: rgba(143, 0, 0, 1);
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .result-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0px;
+        }
+
+        .column {
+            flex: 1;
+            margin-right: 00px;
+        }
+
+        .card {
+            margin: 10px;
+            width: 250px;
+            background-color: #fff;
+            border-radius: 5px;
+            font-size: 12px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding-top: 0px;
+            padding-left: 20px;
+            padding-bottom: 20px;
+            padding-right: 20px;
+        }
+
+        .card-title-pass {
+            font-size: 14px;
+            font-weight: bold;
+            color: green;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .card-title-fail {
+            font-size: 14px;
+            font-weight: bold;
+            color: red;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .card-content {
+            margin-top: 10px;
+        }
+
+        .collapse-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: rgba(143, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .collapse-button:hover {
+            background-color: rgba(143, 0, 0, 1);
+        }
+
+        .guardrail-none {
+            background-color: rgb(128, 128, 128);
+        }
+
+        .guardrail-int {
+            background-color: rgba(173, 216, 230, 0.4);
+        }
+
+        .guardrail-pass {
+            background-color: rgba(0, 128, 0, 0.4);
+        }
+
+        .guardrail-fail {
+            background-color: rgba(255, 0, 0, 0.4);
+        }
+
+        .guardrail-float {
+            background-color: rgba(173, 216, 230, 0.4);
+        }
+
+        .guardrail-string,
+        .guardrail-other {
+            background-color: rgba(173, 216, 230, 0.4);
+        }
+    </style>
 </head>   
 <body>   
-    <h1>Upload a Protocol Parameter Proposal</h1>
-    <form action = "/success" method = "post" enctype="multipart/form-data">   
-        <input type="file" name="file" />   
-        <input type = "submit" value="Upload">   
-    </form>   
+    <h1>Proposal Parameter Checker</h1>
+
+    <div class="container">
+        <div class="column"> 
+            <div class="upload-container">
+                <h2 class="pt-2-">Upload your parameter proposal file</h2>
+                <form action="/success" method="post" enctype="multipart/form-data" class="form-container">   
+                    <input type="file" name="file" />   
+                    <input type="submit" value="Upload">   
+                </form>   
+            </div>
+            <div class="form-container">
+                <h2 class="pt-2">Form for a parameter change proposal</h2>
+                {{ render_form(form) }}
+            </div>
+        </div>
+        <div class="column" style="flex: 3"> 
+            <h2 style="text-align: center;"> Guardrails Results</h2> 
+            <div class="result-container">
+                {% if result %}
+                    {% for key, value in result.items() %}
+                        <div class="card">
+                        {% if value.summary %}
+                            <h1 class="card-title-pass">{{key}}</h1>
+                        {% else %}
+                            <h1 class="card-title-fail">{{key}}</h1>
+                        {% endif %}
+                        {% if value %}
+                            <p>Proposed value: {{value.value}}</p>
+                            <button class="collapse-button" onclick="toggleCardContent(this)">Show</button>
+                            <div class="card-content" style="display: none;">
+                              {% for innerKey, innerValue in value.guardrails.items() %}
+                                {% if innerValue.result is boolean %}
+                                  {% if innerValue.result %}
+                                    <div class="guardrail-pass">
+                                  {% else %}
+                                    <div class="guardrail-fail">
+                                  {% endif %}
+                                {% elif innerValue.result == None %}
+                                  <div class="guardrail-none">
+                                {% elif innerValue.result is integer %}
+                                  <div class="guardrail-int">
+                                {% elif innerValue.result is float %}
+                                  <div class="guardrail-float">
+                                {% elif innerValue.result is string %}
+                                  <div class="guardrail-string">
+                                {% else %}
+                                  <div class="guardrail-other">
+                                {% endif %}
+                                <h2 class="card-subtitle">{{innerKey}}</h2>
+                                <p>{{innerValue.value}}</p>
+                                <p>{{innerValue.description}}</p>
+                              </div>
+                              {% endfor %}
+                            </div>
+                            {% else %}
+                            <p> No proposed value</p>
+                            <h2 class="card-subtitle">No checks were available for those parameters</h2>
+                        {% endif %}
+                        </div> <!-- This is the end of the card-->
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="message">No result yet</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleCardContent(button) {
+            const card = button.parentNode;
+            const cardContent = card.querySelector(".card-content");
+            cardContent.style.display = cardContent.style.display === "none" ? "block" : "none";
+            button.textContent = cardContent.style.display === "none" ? "Show" : "Collapse";
+        }
+    </script>
 </body>   
 </html>
